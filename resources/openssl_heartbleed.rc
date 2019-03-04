@@ -1,0 +1,2 @@
+use auxiliary/scanner/ssl/openssl_heartbleed
+resource stubs/stub_ssl_rhosts.rb

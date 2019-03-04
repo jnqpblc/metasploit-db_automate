@@ -1,0 +1,4 @@
+use auxiliary/scanner/snmp/snmp_login
+set PASSFILE /opt/metasploit-framework/embedded/framework/data/wordlists/common_roots.txt
+set THREADS 10
+resource stubs/stub_snmp_rhosts.rb

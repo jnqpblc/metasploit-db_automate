@@ -1,0 +1,10 @@
+<ruby>
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.info.blank? && service.state == "unknown"
+      print_status "Deleting #{host.address}:#{service.port}/#{service.name} - #{service.info}"
+      self.run_single("services -p #{service.port} #{host.address} -d")
+    end
+  end
+end
+</ruby>

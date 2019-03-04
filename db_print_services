@@ -1,0 +1,7 @@
+<ruby>
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    print_status "#{host.address}:#{service.port}/#{service.name} - #{service.info}"
+  end
+end
+</ruby>

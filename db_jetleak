@@ -1,0 +1,26 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.name == "http" && service.info =~ /jetty/i || service.name == "www" && service.info =~ /jetty/i
+      jetleak_cmd = "python jetleak/jetleak_tester.py http://#{host.address} #{service.port} | tee #{directory_name}/msf-jetleak-output-#{host.address}-#{service.port}-http.txt"
+      print "\n\n"
+      print_status "Running jetleak on #{host.address}:#{service.port}"
+      print_status "#{jetleak_cmd}"
+      run = system jetleak_cmd
+    end
+  end
+  host.services.each do |service|
+    if service.name == "https" && service.info =~ /jetty/i || service.name == "ssl/https" || service.name == "ssl/http" && service.info =~ /jetty/i
+      jetleak_cmd = "python jetleak/jetleak_tester.py https://#{host.address} #{service.port} | tee #{directory_name}/msf-jetleak-output-#{host.address}-#{service.port}-https.txt"
+      print "\n\n"
+      print_status "Running jetleak on #{host.address}:#{service.port}"
+      print_status "#{jetleak_cmd}"
+      run = system jetleak_cmd
+    end
+  end
+end
+</ruby>

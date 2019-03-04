@@ -1,0 +1,17 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.port == 500
+      ikeforce_cmd = "sudo python ikeforce/ikeforce.py #{host.address} -a | tee #{directory_name}/msf-ikeforce-output-#{host.address}-#{service.port}-ike.txt"
+      print "\n\n"
+      print_status "Running ikeforce on #{host.address}:#{service.port}"
+      print_status "#{ikeforce_cmd}"
+      run = system ikeforce_cmd
+    end
+  end
+end
+</ruby>

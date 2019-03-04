@@ -1,0 +1,16 @@
+admin
+service
+root
+cisco
+support
+administrator
+Cisco
+user
+noc
+supervisor
+operator
+mis
+helpdesk
+vpn
+adm
+CiscoWorks

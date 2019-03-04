@@ -1,0 +1,31 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+msf_base = "/opt/metasploit-framework/embedded/framework"
+if File.file?("#{msf_base}/msfconsole")
+  self.run_single("spool #{directory_name}/msf-auxiliary-console-output.log")
+  Dir["#{msf_base}/modules/auxiliary/scanner/*"].each do |aux_types|
+    Dir["#{aux_types}/*.rb"].each do |file_name|
+      aux_types.slice! "#{msf_base}/modules/auxiliary/scanner/"
+      if File.file?("stubs/stub_#{aux_types}_rhosts.rb")
+        file_name.slice! "#{msf_base}/modules/"
+        file_name.slice! ".rb"
+        print_status("Using #{file_name}")
+        self.run_single("use #{file_name}")
+        self.run_single("resource stubs/stub_#{aux_types}_rhosts.rb")
+      end
+    end
+  end
+  self.run_single("spool off")
+  self.run_single("back")
+  grep_cmd = `egrep '\[\+\]|Using ' #{directory_name}/msf-auxiliary-console-output.log |grep -B10 '\[+\]'`
+  print_status "Showing filtered output from #{directory_name}/msf-auxiliary-console-output.log"
+  print_status "#{grep_cmd}"
+else
+  print_error('!')
+  print_error("! A MetaSploit directory was not found in #{msf_base}")
+  print_error('!')
+end
+</ruby>

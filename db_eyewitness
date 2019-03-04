@@ -1,0 +1,17 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.name == "http" || service.name == "www" || service.name == "http-proxy" || service.name == "https" || service.name == "ssl/https" || service.name == "ssl/http"
+      eyewitness_cmd = "python eyewitness/EyeWitness.py --no-prompt --timeout 2 --all-protocols --single #{host.address}:#{service.port} -d #{directory_name}/msf-eyewitness-output-#{host.address}-#{service.port}/ >/dev/null"
+      print "\n\n"
+      print_status "Running eyewitness on #{host.address}:#{service.port}"
+      print_status "#{eyewitness_cmd}"
+      run = system eyewitness_cmd
+    end
+  end
+end
+</ruby>

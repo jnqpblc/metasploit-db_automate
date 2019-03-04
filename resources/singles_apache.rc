@@ -1,0 +1,21 @@
+use auxiliary/scanner/http/apache_activemq_source_disclosure
+resource stubs/stub_http_apache_rhosts.rb
+
+use auxiliary/scanner/http/apache_optionsbleed
+resource stubs/stub_http_apache_rhosts.rb
+
+use exploits/windows/http/apache_chunked
+resource stubs/stub_http_apache_explt_rhost.rb
+
+use exploits/linux/http/apache_continuum_cmd_exec
+resource stubs/stub_http_apache_explt_rhost.rb
+
+use exploits/windows/http/apache_mod_rewrite_ldap
+resource stubs/stub_http_apache_explt_rhost.rb
+
+use exploits/windows/http/apache_modjk_overflow
+resource stubs/stub_http_apache_explt_rhost.rb
+
+use exploits/multi/http/apache_roller_ognl_injection
+resource stubs/stub_http_apache_explt_rhost.rb
+

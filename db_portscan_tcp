@@ -1,0 +1,12 @@
+<ruby>
+home_dir = Dir.home
+file_name = "#{home_dir}/#{framework.db.workspace.name}-targets.txt"
+
+if File.exist?(file_name)
+  self.run_single("db_nmap -iL #{file_name} -Pn -n -sS -p 0-65535 -T5 --min-hostgroup 128 --min-parallelism 64")
+else
+  print_error('!')
+  print_error("! A list of target IP Addressess was nto found at #{file_name}")
+  print_error('!')
+end
+</ruby>

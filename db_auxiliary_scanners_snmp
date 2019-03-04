@@ -1,0 +1,24 @@
+<ruby>
+aux_type = "snmp"
+msf_base = "/opt/metasploit-framework/embedded/framework"
+if File.file?("#{msf_base}/msfconsole")
+  self.run_single("setg PASSFILE #{msf_base}/data/wordlists/common_roots.txt")
+  Dir["#{msf_base}/modules/auxiliary/scanner/#{aux_type}/*.rb"].each do |file_name|
+    file_name.slice! "#{msf_base}/modules/"
+    file_name.slice! ".rb"
+    print_status("Using #{file_name}")
+    self.run_single("use #{file_name}")
+    if File.file?("stubs/stub_#{aux_type}_rhosts.rb")
+      self.run_single("resource stubs/stub_#{aux_type}_rhosts.rb")
+    else
+      print_error('!')
+      print_error("! The file stubs/stub_#{aux_type}_rhosts.rb was not found")
+      print_error('!')
+    end
+  end
+else
+  print_error('!')
+  print_error("! A MetaSploit directory was not found in #{msf_base}")
+  print_error('!')
+end
+</ruby>

@@ -1,0 +1,11 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    self.run_single("db_nmap -n -Pn -sTV -p #{service.port} --script default,vuln,auth,intrusive,brute --script-args 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)' --open -oN #{directory_name}/msf-nmap-nse-output-#{host.address}-#{service.port}.nmap #{host.address}")
+  end
+end
+</ruby>

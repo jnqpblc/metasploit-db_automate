@@ -1,0 +1,17 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.port == 500
+      iker_cmd = "sudo python iker.py --clientids ikeforce/wordlists/groupnames.dic --output #{directory_name}/msf-iker-output-#{host.address}-#{service.port}-ike.txt #{host.address}"
+      print "\n\n"
+      print_status "Running iker on #{host.address}:#{service.port}"
+      print_status "#{iker_cmd}"
+      run = system iker_cmd
+    end
+  end
+end
+</ruby>
