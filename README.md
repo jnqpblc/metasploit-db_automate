@@ -3,11 +3,11 @@ A pentest scanning task automation project using custom resource files and Metas
 
 This project is a beta attempt to automate scanning tasks using the Metasploit database.
 
-db_* files like db_nikto will run the associated external command only against the specific services that match the tool
+db_\* files like db_nikto will run the associated external command only against the specific services that match the tool
 
-The *.rc files are the shell resource files for each MetaSploit module. To include a new module, simply create a new *.rc file and link it to the appropreiate stub ruby file (*.rb). 
+The \*.rc files are the shell resource files for each MetaSploit module. To include a new module, simply create a new *.rc file and link it to the appropreiate stub ruby file (\*.rb). 
 
-The *.rb files are the brains of each resource (*.rc and *.db) file. These files are shared resources for each akin resource (*.rc) file.
+The \*.rb files are the brains of each resource (\*.rc and \*.db) file. These files are shared resources for each akin resource (\*.rc) file.
 
 Below is a example:
 
