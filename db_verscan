@@ -3,7 +3,7 @@ framework.db.hosts.each do |host|
   host.services.each do |service|
     if service.proto == "tcp"
       self.run_single("db_nmap -n -Pn -sTV -p #{service.port} --script +version #{host.address}")
-    else if service.proto == "udp"
+    elsif service.proto == "udp"
       self.run_single("db_nmap -n -Pn -sUV -p #{service.port} --script +version #{host.address}")
     end
   end
