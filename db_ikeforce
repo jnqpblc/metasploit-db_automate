@@ -6,9 +6,9 @@ Dir.mkdir(directory_name) unless File.exist?(directory_name)
 framework.db.hosts.each do |host|
   host.services.each do |service|
     if service.port == 500
-      ikeforce_cmd = "sudo python ikeforce/ikeforce.py #{host.address} -a | tee #{directory_name}/msf-ikeforce-output-#{host.address}-#{service.port}-ike.txt"
+      ikeforce_cmd = "sudo python ikeforce-spiderlabs/ikeforce.py #{host.address} -a | tee #{directory_name}/msf-ikeforce-output-#{host.address}-#{service.port}-ike.txt"
       print "\n\n"
-      print_status "Running ikeforce on #{host.address}:#{service.port}"
+      print_status "Running ikeforce on #{host.address}:#{service.port}/ike"
       print_status "#{ikeforce_cmd}"
       run = system ikeforce_cmd
     end

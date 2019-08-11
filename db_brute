@@ -6,14 +6,14 @@ Dir.mkdir(directory_name) unless File.exist?(directory_name)
 framework.db.hosts.each do |host|
   host.services.each do |service|
     if service.name == "ssh"
-      brute_cmd = "hydra -L /opt/metasploit-framework/embedded/framework/data/wordlists/unix_users.txt -P /opt/metasploit-framework/embedded/framework/data/wordlists/unix_passwords.txt -o #{directory_name}/msf-brute-output-#{host.address}-#{service.port}-ssh.txt ssh://#{host.address}:#{service.port}"
+      brute_cmd = "thc-hydra-vanhauser-thc/hydra -L /opt/metasploit-framework/embedded/framework/data/wordlists/unix_users.txt -P /opt/metasploit-framework/embedded/framework/data/wordlists/unix_passwords.txt -o #{directory_name}/msf-brute-output-#{host.address}-#{service.port}-ssh.txt ssh://#{host.address}:#{service.port}"
       print "\n\n"
       print_status "Running hydra on #{host.address}:#{service.port}/ssh"
       print_status "#{brute_cmd}"
       run = system brute_cmd
     end
     if service.name == "ftp"
-      brute_cmd = "hydra -L /opt/metasploit-framework/embedded/framework/data/wordlists/unix_users.txt -P /opt/metasploit-framework/embedded/framework/data/wordlists/unix_passwords.txt -o #{directory_name}/msf-brute-output-#{host.address}-#{service.port}-ftp.txt ftp://#{host.address}:#{service.port}"
+      brute_cmd = "thc-hydra-vanhauser-thc/hydra -L /opt/metasploit-framework/embedded/framework/data/wordlists/unix_users.txt -P /opt/metasploit-framework/embedded/framework/data/wordlists/unix_passwords.txt -o #{directory_name}/msf-brute-output-#{host.address}-#{service.port}-ftp.txt ftp://#{host.address}:#{service.port}"
       print "\n\n"
       print_status "Running hydra on #{host.address}:#{service.port}/ftp"
       print_status "#{brute_cmd}"

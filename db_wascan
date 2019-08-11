@@ -6,18 +6,18 @@ Dir.mkdir(directory_name) unless File.exist?(directory_name)
 framework.db.hosts.each do |host|
   host.services.each do |service|
     if service.name == "http" || service.name == "www" || service.name == "http-proxy"
-      wascan_cmd = "python wascan/wascan.py --ragent -n --url http://#{host.address}:#{service.port}/ | tee #{directory_name}/msf-wascan-output-#{host.address}-#{service.port}-http.txt"
+      wascan_cmd = "python wascan-m4ll0k/wascan.py --ragent -n --url http://#{host.address}:#{service.port}/ | tee #{directory_name}/msf-wascan-output-#{host.address}-#{service.port}-http.txt"
       print "\n\n"
-      print_status "Running wascan on #{host.address}:#{service.port}"
+      print_status "Running wascan on #{host.address}:#{service.port}/http"
       print_status "#{wascan_cmd}"
       run = system wascan_cmd
     end
   end
   host.services.each do |service|
     if service.name == "https" || service.name == "ssl/https" || service.name == "ssl/http"
-      wascan_cmd = "python wascan/wascan.py --ragent -n --url https://#{host.address}:#{service.port}/ | tee #{directory_name}/msf-wascan-output-#{host.address}-#{service.port}-https.txt"
+      wascan_cmd = "python wascan-m4ll0k/wascan.py --ragent -n --url https://#{host.address}:#{service.port}/ | tee #{directory_name}/msf-wascan-output-#{host.address}-#{service.port}-https.txt"
       print "\n\n"
-      print_status "Running wascan on #{host.address}:#{service.port}"
+      print_status "Running wascan on #{host.address}:#{service.port}/https"
       print_status "#{wascan_cmd}"
       run = system wascan_cmd
     end

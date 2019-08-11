@@ -1,0 +1,25 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.proto == "tcp"
+      nmap_cmd ="nmap -n -Pn -sTV -p #{service.port} --script default,vuln,auth,intrusive,brute --script-args 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)' --open -oA #{directory_name}/msf-nmap-nse-output-#{host.address}-#{service.port}-tcp #{host.address}"
+      print "\n\n"
+      print_status "Running nmap on #{host.address}:#{service.port}/tcp"
+      print_status "#{nmap_cmd}"
+      run = system nmap_cmd
+      self.run_single("db_import #{directory_name}/msf-nmap-nse-output-#{host.address}-#{service.port}-tcp.xml")
+    elsif service.proto == "udp"
+      nmap_cmd = "nmap -n -Pn -sUV -p #{service.port} --script default,vuln,auth,intrusive,brute --script-args 'Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)' --open -oA #{directory_name}/msf-nmap-nse-output-#{host.address}-#{service.port}-udp #{host.address}"
+      print "\n\n"
+      print_status "Running nmap on #{host.address}:#{service.port}/udp"
+      print_status "#{nmap_cmd}"
+      run = system nmap_cmd
+      self.run_single("db_import #{directory_name}/msf-nmap-nse-output-#{host.address}-#{service.port}-udp.xml")
+    end
+  end
+end
+</ruby>

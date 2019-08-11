@@ -8,7 +8,7 @@ framework.db.hosts.each do |host|
     if service.name == "http" || service.name == "www" || service.name == "http-proxy"
       wsman_cmd = "curl -vvv --header 'Content-Type: application/soap+xml;charset=UTF-8' --header 'WSMANIDENTIFY: unauthenticated' http://137.117.58.204:1221/wsman --data \"<s:Envelope xmlns:s='http://www.w3.org/2003/05/soap-envelope' xmlns:wsmid='http://schemas.dmtf.org/wbem/wsman/identity/1/wsmanidentity.xsd'><s:Header/><s:Body><wsmid:Identify/></s:Body></s:Envelope>\" | tee #{directory_name}/msf-wsman-output-#{host.address}-#{service.port}-http.txt"
       print "\n\n"
-      print_status "Running wsman on #{host.address}:#{service.port}"
+      print_status "Running wsman on #{host.address}:#{service.port}/http"
       print_status "#{wsman_cmd}"
       run = system wsman_cmd
     end
@@ -17,7 +17,7 @@ framework.db.hosts.each do |host|
     if service.name == "https" || service.name == "ssl/https" || service.name == "ssl/http"
       wsman_cmd = "curl -vvv --header 'Content-Type: application/soap+xml;charset=UTF-8' --header 'WSMANIDENTIFY: unauthenticated' http://137.117.58.204:1221/wsman --data \"<s:Envelope xmlns:s='http://www.w3.org/2003/05/soap-envelope' xmlns:wsmid='http://schemas.dmtf.org/wbem/wsman/identity/1/wsmanidentity.xsd'><s:Header/><s:Body><wsmid:Identify/></s:Body></s:Envelope>\" | tee #{directory_name}/msf-wsman-output-#{host.address}-#{service.port}-https.txt"
       print "\n\n"
-      print_status "Running wsman on #{host.address}:#{service.port}"
+      print_status "Running wsman on #{host.address}:#{service.port}/https"
       print_status "#{wsman_cmd}"
       run = system wsman_cmd
     end

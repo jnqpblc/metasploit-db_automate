@@ -1,4 +1,5 @@
-resource db_verscan
+resource db_portscan_udp_top30_manual
+resource db_verscan_manual
 resource db_eyewitness
 resource db_ikeforce
 resource db_iker
@@ -8,13 +9,13 @@ resource db_whatweb
 resource db_dirb
 resource db_sqlmap_crawl
 resource db_sqlmap_forms
-resource db_sslscan
+resource db_sslyze
 resource db_struts-pwn
 resource db_test-wsman
-resource db_tomcat_finder
+resource db_tomcat_finder_manual
 resource db_wascan
 resource db_nikto
-resource db_scriptscan
+resource db_scriptscan_manual
 resource db_auxiliary_scanners
 resource db_exploit_scanners
 resource db_brute
