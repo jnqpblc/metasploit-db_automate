@@ -1,4 +1,6 @@
 system("sed -i 's/^\$USER_AGENT = .*$/\$USER_AGENT = \"Mozilla\\/5.0 \\(compatible; Yahoo! Slurp; http:\\/\\/help.yahoo.com\\/help\\/us\\/ysearch\\/slurp\\)\"/g;' whatweb-urbanadventurer/lib/whatweb.rb")
+system("sed -i 's/+ port/+ port, timeout=3, context=ssl._create_unverified_context\(\)\)/g;' jetleak-testing-script-gdssecurity/jetleak_tester.py")
+system("sed -i 's/OpenSSL/os/g; s/os.rand.bytes/os.urandom/g;' ikeforce-spiderlabs/ikeclient.py")
 system("cp nikto-sullo/program/nikto.conf.default nikto-sullo/program/nikto.conf")
 system("sed -i 's/^USERAGENT=.*$/USERAGENT=Mozilla\\/5.0 \\(compatible; Yahoo! Slurp; http:\\/\\/help.yahoo.com\\/help\\/us\\/ysearch\\/slurp\\)/g;' nikto-sullo/program/nikto.conf")
 system("sed -i 's/^NIKTODTD=.*$/NIKTODTD=nikto-sullo/\\/program\\/docs\\/nikto.dtd/g;' nikto-sullo/program/nikto.conf")
