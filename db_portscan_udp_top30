@@ -1,9 +1,16 @@
 <ruby>
 home_dir = Dir.home
 file_name = "#{home_dir}/#{framework.db.workspace.name}-targets.txt"
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
 
 if File.exist?(file_name)
-  self.run_single("db_nmap -iL #{file_name} -Pn -n -sU --top-ports 30 --open")
+  nmap_cmd ="nmap -iL #{file_name} -Pn -n -sU --top-ports 30 --open -oX #{directory_name}/msf-nmap-udp-top30-output.xml"
+  print "\n\n"
+  print_status "Running nmap on #{file_name}/udp"
+  print_status "#{nmap_cmd}"
+  run = system nmap_cmd
+  self.run_single("db_import #{directory_name}/msf-nmap-udp-top30-output.xml")
 else
   print_error('!')
   print_error("! A list of target IP Addressess was nto found at #{file_name}")
