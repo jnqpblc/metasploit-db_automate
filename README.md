@@ -13,7 +13,7 @@ Below is a example:
 
 ```
 $ python setup.py clone // will download all needed repos
-$ python setup.py clone // will install all needed packages and build specific repos
+$ python setup.py build // will install all needed packages and build specific repos
 $ python setup.py pull // will to update all git repos
 ```
 
