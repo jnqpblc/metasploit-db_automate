@@ -1,0 +1,43 @@
+<ruby>
+home_dir = Dir.home
+directory_name = "#{home_dir}/msf_#{framework.db.workspace.name}_output"
+Dir.mkdir(directory_name) unless File.exist?(directory_name)
+
+public_ip = `curl -s http://whatismyip.akamai.com`;
+script_template = File.open("w3af_script_template.w3af", "r")
+teamplate_data = script_template.read
+script_template.close unless script_template.nil?
+teamplate_data.gsub! '{CLIENT}', "#{directory_name}"
+teamplate_data.gsub! '{LHOST}', "#{public_ip}"
+
+framework.db.hosts.each do |host|
+  host.services.each do |service|
+    if service.name == "http" || service.name == "www" || service.name == "http-proxy"
+      teamplate_data.gsub! '{PROTO}', 'http'
+      teamplate_data.gsub! '{TARGET}', "#{host.address}"
+      teamplate_data.gsub! '{PORT}', "#{service.port}"
+      http_script_file = "#{directory_name}/msf-w3af-script-input-#{host.address}-#{service.port}-http.w3af"
+      File.open("#{http_script_file}", "w") { |file| file.write(teamplate_data) }
+      w3af_cmd = "python w3af-andresriancho/w3af_console --yes --no-update -s #{http_script_file}"
+      print "\n\n"
+      print_status "Running w3af on #{host.address}:#{service.port}/http"
+      print_status "#{w3af_cmd}"
+      run = system w3af_cmd
+    end
+  end
+  host.services.each do |service|
+    if service.name == "https" || service.name == "ssl/https" || service.name == "ssl/http"
+      teamplate_data.gsub! '{PROTO}', 'https'
+      teamplate_data.gsub! '{TARGET}', "#{host.address}"
+      teamplate_data.gsub! '{PORT}', "#{service.port}"
+      https_script_file = "#{directory_name}/msf-w3af-script-input-#{host.address}-#{service.port}-https.w3af"
+      File.open("#{https_script_file}", "w") { |file| file.write(teamplate_data) }
+      w3af_cmd = "python w3af-andresriancho/w3af_console --yes --no-update -s #{https_script_file}"
+      print "\n\n"
+      print_status "Running w3af on #{host.address}:#{service.port}/https"
+      print_status "#{w3af_cmd}"
+      run = system w3af_cmd
+    end
+  end
+end
+</ruby>

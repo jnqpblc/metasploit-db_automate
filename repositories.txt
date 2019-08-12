@@ -3,6 +3,7 @@ https://github.com/nmap/nmap.git
 https://github.com/cldrn/nmap-nse-scripts.git
 https://github.com/sullo/nikto.git
 https://github.com/m4ll0k/WAScan.git
+https://github.com/andresriancho/w3af.git
 https://github.com/v0re/dirb.git
 https://github.com/urbanadventurer/WhatWeb.git
 https://github.com/sqlmapproject/sqlmap.git

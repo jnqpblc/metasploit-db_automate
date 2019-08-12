@@ -1,0 +1,47 @@
+profiles
+use audit_high_risk
+back
+
+misc-settings
+set max_scan_time 30
+set max_discovery_time 10
+back
+
+http-settings
+set rand_user_agent True
+back
+
+plugins
+
+audit config rfi
+set listen_address {LHOST}
+set listen_port 44449
+back
+
+audit htaccess_methods
+bruteforce form_auth
+grep password_profiling
+
+output console, html_file, text_file
+output config html_file
+set output_file {CLIENT}/msf-w3af-output-{TARGET}-{PORT}-{PROTO}.html
+set verbose False
+back
+output config text_file
+set output_file {CLIENT}/msf-w3af-output-{TARGET}-{PORT}-{PROTO}.txt
+set verbose False
+back
+output config console
+set verbose False
+back
+back
+
+target
+set target {PROTO}://{TARGET}:{PORT}/
+back
+
+start
+
+
+
+exit
