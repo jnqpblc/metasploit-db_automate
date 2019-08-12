@@ -52,7 +52,7 @@ My example methodology is as follows:
 
 6> "msf> resource db_sqlmap" <~ loops over all web services in the msf database and runs sqlmap against them.
 
-7> "msf> resource db_skipfish" <~ loops over all web services in the msf database and runs skipfish against them.
+7> "msf> resource db_w3af" <~ loops over all web services in the msf database and runs w3af against them.
 
 8> "msf> resource db_auxiliary_scanners" <~ loops over all services in the msf database and runs ALL auxiliary scripts against them.
 
