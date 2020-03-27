@@ -6,7 +6,7 @@ Dir.mkdir(directory_name) unless File.exist?(directory_name)
 framework.db.hosts.each do |host|
   host.services.each do |service|
     if service.proto == "tcp" && !service.name.blank? && service.name != "unknown" && service.name != "ssh" && service.name !~ /rpc/i
-      sslyze_cmd = "sslyze --regular 96.94.59.225:4433 #{host.address}:#{service.port} > #{directory_name}/msf-sslyze-output-#{host.address}-#{service.port}.txt"
+      sslyze_cmd = "sslyze --regular #{host.address}:#{service.port} > #{directory_name}/msf-sslyze-output-#{host.address}-#{service.port}.txt"
       print "\n\n"
       print_status "Running sslyze on #{host.address}:#{service.port}/ssl"
       print_status "#{sslyze_cmd}"
